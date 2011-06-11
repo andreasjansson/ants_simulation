@@ -1,0 +1,49 @@
+ ___________________
+/\                  \
+\_| ants_simulation |
+  |   ______________|_
+   \_/________________/
+
+
+Requires my_js_lib https://github.com/andreasjansson/my_js_lib
+
+A naive Javascript ant colony simulation. Nothing half as complex as
+actual Ant Colony Optimisation
+(http://irancic.buksna.net/metah/0262042193.pdf), but it's pretty to
+look at.
+
+The ants form a subsumption architecture by having a number of
+reactive rules govern their behaviour. The rules are ordered by
+precedence, and once a rule has applied, no other rules can apply (a
+bit like [L] in Apache configurations). These are the rules (ordered by
+precedence, descending):
+
+1. If you carry food and you are at the ant hill: Drop the food and
+   get a new, random, direction of movement.
+
+2. If you carry food and you are next to the ant hill: Drop pheromone
+   and set direction on the ant hill.
+
+3. If you carry food and you are standing on pheromone: Drop pheromone
+   and set direction on the pheromone in front of you (if any).
+
+4. If you carry food: Set direction on the ant hill and drop pheromone.
+
+5. If you have found food: Pick up the food, drop pheromone, and set
+   direction on the ant hill.
+
+6. If you are standing on pheromone: Set direction on the pheromone in
+   front of you (if any).
+
+7. Sense distant pheromone, and if you sense any, set direction on it.
+
+Ants don't always follow the rules regarding their movement, sometimes
+they just walk randomly.
+
+Configuration parameters can be found in the Config.js file.
+
+Note: In the stylesheet you need to make all child divs of the View
+node absolutely positioned. Otherwise nothing will work.
+
+This simulation can (soon, if not already) be viewed at
+http://subsumption.jansson.me.uk

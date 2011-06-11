@@ -1,3 +1,21 @@
+/*
+ * ants_simulation - A naive Javascript simulation of an ant colony
+ * Copyright (C) 2011 Andreas Jansson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 Ant = function(position)
 {
 	this.position = position;
@@ -5,7 +23,7 @@ Ant = function(position)
 	this.carriedFood = null;
 }
 
-Ant.prototype.getLetter = function()
+Ant.prototype.getText = function()
 {
 	return "a";
 }
@@ -20,6 +38,9 @@ Ant.prototype.getZIndex = function()
 	return 5;
 }
 
+/**
+ * Apply the rules described in README.
+ */
 Ant.prototype.step = function(world)
 {
 	var before = this.position;
@@ -78,6 +99,13 @@ Ant.prototype.isOnPheromone = function(pheromoneGrid)
 	return pheromoneGrid.get(this.position) > 0;
 }
 
+/**
+ * Sense a pheromone in an arc of 3/8 * pi radians in direction,
+ * right in front of the ant.
+ * Returns the direction of the found pheromone, as a vector, or
+ * null if none were found.
+ * If there are more than one, return the direction of the strongest.
+ */
 Ant.prototype.sensePheromoneInDirection = function(pheromoneGrid, direction)
 {
 	var strongestDirection = null;
@@ -98,6 +126,16 @@ Ant.prototype.sensePheromoneInDirection = function(pheromoneGrid, direction)
 	return Vector.fromRadians(strongestDirection);
 }
 
+/**
+ * Sense pheromone by "looking" in eight directions.
+ * Return the direction that has the most pheromones in it.
+ * All pheromones are equally weighted (strength not taken
+ * into consideration), but the fact that coverage is decreasing
+ * exponentially the further out from the ant you get
+ * effectively means that pheromone further away is less
+ * important.
+ * Returns a vector or null.
+ */
 Ant.prototype.senseDistantPheromone = function(pheromoneGrid)
 {
 	var directionStrengths = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -126,6 +164,9 @@ Ant.prototype.senseDistantPheromone = function(pheromoneGrid)
 	return Vector.fromRadians(strongestDirection * 2 * Math.PI / 8);
 }
 
+/**
+ * Will the ant turn according to rules, or just randomly?
+ */
 Ant.prototype.turnRationally = function()
 {
 	return Math.random() < Config.ant.RATIONALITY;
