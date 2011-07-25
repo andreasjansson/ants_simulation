@@ -232,3 +232,8 @@ Ant.prototype.isCarryingFood = function()
 {
 	return this.carriedFood != null;
 }
+
+Ant.prototype.getPosition = function()
+{
+  return this.position;
+}

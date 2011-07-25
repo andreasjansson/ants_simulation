@@ -39,3 +39,8 @@ Pheromone.prototype.getZIndex = function()
 {
 	return 1;
 }
+
+Pheromone.prototype.getPosition = function()
+{
+  return this.position;
+}

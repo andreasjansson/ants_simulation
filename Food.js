@@ -40,3 +40,8 @@ Food.prototype.getZIndex = function()
 {
 	return 7;
 }
+
+Food.prototype.getPosition = function()
+{
+  return this.position;
+}

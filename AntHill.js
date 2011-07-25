@@ -36,3 +36,8 @@ AntHill.prototype.getZIndex = function()
 {
 	return 3;
 }
+
+AntHill.prototype.getPosition = function()
+{
+  return this.position;
+}
